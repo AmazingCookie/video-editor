@@ -1,3 +1,17 @@
+# Key Features
+1. Upload videos from local files 
+2. Export videos to local files
+3. Clip videos by frames
+
+# Packages Required
+FFmpeg
+
+# TODO
+1. Enable the function of uploading videos from local files
+2. Enable the function of exporting videos to local files
+3. Enable the function of 
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).

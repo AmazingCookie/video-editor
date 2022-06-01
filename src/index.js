@@ -1,15 +1,33 @@
+/**
+ * @description xxxxxx
+ * @author amacookie
+ * @since 15/05/22
+ */
+
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import { Provider } from 'react-redux';
+import AppRouter from './routers/AppRouter'
+import { store } from './store';
+import { DndProvider } from 'react-dnd'
+import { HTML5Backend } from 'react-dnd-html5-backend'
+
+
 // import './index.css';
 // import reportWebVitals from './reportWebVitals';
+import 'normalize.css/normalize.css'
+import './styles/styles.scss'
 
-import FFmpegLoader from './Components/FFmpegLoader';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <React.StrictMode>
-    <FFmpegLoader />
-  </React.StrictMode>
+  // <React.StrictMode>
+  <Provider store={store}>
+    <DndProvider backend={HTML5Backend}>
+      <AppRouter />
+    </DndProvider>
+  </Provider>
+  // </React.StrictMode>
 );
 
 

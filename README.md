@@ -1,15 +1,47 @@
 # Key Features
-1. Upload videos from local files 
-2. Export videos to local files
-3. Clip videos by frames
+1. Upload video assets from local files. √
+2. Add multiple video assets to the sequence. √
+3. Preview the video sequence. √
+4. Pause playback of the preview while changing visibility of the window. √
+5. Visulize Timeline panel for workplace √
+6. Use React-Redux to communicate between components
 
 # Packages Required
 FFmpeg
 
 # TODO
-1. Enable the function of uploading videos from local files
-2. Enable the function of exporting videos to local files
-3. Enable the function of 
+1. Export videos to local files 
+3. Clip videos by frames
+2. Visulize Timeline panel for workplace
+4. Support audio playback
+2. Specify the area used for workplace
+3. Visulize video assets
+4. Add a video sequencer to edit strips
+5. Enable the function of showing videos frame by frame within the workplace
+
+
+# CSCC
+1. normalize/reset
+2. naming - BEM
+3. responsive design
+
+
+# Logs
+
+13/05/2022 - In terms of extracting image sequences from videos, consider the use of WebCodecs API instead of native methods such as `setTimeOut`.
+
+17/05/2022 - Solve the problem that the video is loaded incompletedly while adding to sequence.
+
+19/05/2022 - Load the asset with decoder and demuxer to speed up the reading of the frame. (The old version only allows for play speed as it projects frames in the offscreen canvas)
+    - Use MP4Box to demuxe video assets from src: get related info and generate encoded video chunks
+    - Use VideoDecoder from Webcodecs API to decode video chunks and get video frames
+
+
+21/05/2022 - Implement the timeline for video editing.
+
+23/05/2022 - Add React-DnD. 
+
+01/06/2022 - Implement asset cards and enable the drag function.
 
 
 # Getting Started with Create React App
@@ -19,66 +51,3 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 ## Available Scripts
 
 In the project directory, you can run:
-
-### `npm start`
-
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
-
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)

@@ -1,0 +1,50 @@
+.timeline {
+    border: 15px solid green;
+    padding: $m-size;
+    min-width: 30rem;
+
+    &__zoom {
+        display: flex;
+        justify-content: right;
+
+        &__slider {
+            max-width: fit-content;
+            -webkit-appearance: none;
+            border: none;
+            padding: $s-size;
+
+            &::-webkit-slider-runnable-track {
+                background: #CCC;
+                cursor: pointer;
+            }
+
+            &::-webkit-slider-thumb {
+                -webkit-appearance: none;
+                height: 10px;
+                width: 20px;
+                background: green;
+            }
+        }
+    }
+
+    &__container {
+        background-color: lighten(gray, 30);
+        overflow-x: scroll;
+        cursor: pointer;
+
+        &__ruler {
+            display: block;
+            font-size: $s-size;
+            background-color: gray;
+            color: red;
+        }
+
+        &__channel {
+            display: block;
+        }
+    }
+
+    h1 {
+        background-color: black;
+    }
+}

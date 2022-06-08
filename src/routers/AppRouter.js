@@ -1,5 +1,5 @@
 
-import { HashRouter, Routes, Route, Link, NavLink } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Link, NavLink } from 'react-router-dom';
 import EditPage from '../components/EditPage';
 import HomePage from '../components/Homepage';
 
@@ -13,8 +13,9 @@ const Header = () => (
 );
 
 const AppRouter = () => (
-    <HashRouter>
+    <BrowserRouter>
         <Header />
+
         <div className='content'>
             <Routes>
                 <Route path="/" element={<HomePage />} />
@@ -22,7 +23,7 @@ const AppRouter = () => (
                 <Route path="*" element={<Link to='/'>Go Home</Link>} />
             </Routes>
         </div>
-    </HashRouter>
+    </BrowserRouter>
 )
 
 export default AppRouter;

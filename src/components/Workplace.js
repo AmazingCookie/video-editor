@@ -129,14 +129,21 @@ const Workplace = () => {
     }
 
     const handleReset = () => {
+        if (!clipList[clipIndex]?.asset.isPaused())
+            setPause();
+            
         setCurrent(0);
         index = 0;
         clipIndex = 0;
     }
 
     const handleStart = async () => {
-        await renderClip(frameByFrame);
-        update();
+        if (!clipList[clipIndex]?.asset.isPaused())
+            setPause();
+        else {
+            await renderClip(frameByFrame);
+            update();
+        }
     }
 
     const generateTime = (current, fps) => {

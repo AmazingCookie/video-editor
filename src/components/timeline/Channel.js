@@ -1,4 +1,6 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
+import { Clip } from "../../models";
+import ClipCard from "./ClipCard";
 
 /**
  * @prop {number} index the index of this channel
@@ -10,41 +12,45 @@ import React, { useEffect, useRef } from "react";
  * @prop {number} config.scaleTime time represented for one scale (frame)
  * @prop {number} config.nbSamples total length of video sequences (frame)
  * @prop {number} config.fps 
- * 
- * @prop {function} _drawPointer draw time pointer
+
  */
 export default (props) => {
     const { scaleRatio, scale, scaleTime, nbSamples } = props.config;
-    
-    const defaultHeight = 40;
+
+    const defaultHeight = 60;
     const defaultWidth = Math.ceil(nbSamples / scaleTime) * scale;
-    const canvasRef = useRef(null);
 
-    const drawClip = () => {
-        let $channelCanvas = canvasRef.current;
-        const ctx = $channelCanvas.getContext('2d');
+    const [height, setHeight] = useState(Math.ceil(defaultHeight * scaleRatio));
+    const [width, setWidth] = useState(Math.ceil(defaultWidth * scaleRatio));
 
-        $channelCanvas.height = Math.ceil(defaultHeight * scaleRatio);
-        $channelCanvas.width = Math.ceil(defaultWidth * scaleRatio);
-
-        props.clips.forEach(clip => {
-            const x = clip.offset/ scaleTime * scale;
-            const y = 0;
-            const h = $channelCanvas.height;
-            const w = clip.nbSamples / scaleTime * scale;
-            ctx.fillStyle = 'red';
-            ctx.fillRect(x, y, w, h);
-            console.log(`${x} ${y} ${h} ${w}`);
-        });
-
-        props._drawPointer(ctx, $channelCanvas.height);
-    }
+    // let height = Math.ceil(defaultHeight * scaleRatio);
+    // let width = Math.ceil(defaultWidth * scaleRatio);
 
     useEffect(() => {
-        drawClip();
-    }, [props])
+        // console.log('regenerate!!');
+        // console.log(`Before: h: ${height}, w: ${width}`);
+
+        const newWdith = Math.ceil(nbSamples / scaleTime) * scale;
+        setHeight(Math.ceil(defaultHeight * scaleRatio));
+        setWidth(Math.ceil(newWdith * scaleRatio));
+    }, [props.config])
+
 
     return (
-        <canvas className="timeline__container__channel" ref={canvasRef}/>
+        <div className="timeline__container__channels__channl" style={{
+            height: height,
+            width: width
+        }}>
+            {
+                props.clips.map(clip => {
+                    const x = clip.offset / scaleTime * scale;
+                    const y = 0;
+                    const h = height;
+                    const w = clip.nbSamples / scaleTime * scale;
+                    return <ClipCard clip={clip} x={x} y={y} h={h} w={w} />
+                })
+            }
+        </div>
+
     )
 }

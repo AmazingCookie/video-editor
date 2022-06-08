@@ -80,6 +80,19 @@ export class Demuxer {
         if (this.samples)
             return Promise.resolve(this.samples);
         return new Promise((resolver) => { this._sample_resolver = resolver; })
+        // for (let sample of this.samples) {
+        //     console.log('start!');
+        //     const type = sample.is_sync ? "key" : "delta";
+
+        //     let chunk = new window.EncodedVideoChunk({
+        //         type,
+        //         data: sample.data,
+        //         duration: sample.duration,
+        //         timestamp: sample.cts
+        //     })
+        //     decoder.decode(chunk);
+        // }
+    
     }
 
     // onSegment = async (id, user, buffer, sampleNum, last) => {

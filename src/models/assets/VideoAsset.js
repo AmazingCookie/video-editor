@@ -2,11 +2,12 @@ import Asset from "./Asset";
 
 class VideoAsset extends Asset {
 
-    $videoElem = document.createElement('video');
-
     constructor({ name, src } = {}) {
         super({ name, type: 'video', src });
-        this.$offScreenCanvas = document.querySelector("canvas");
+        this.$videoElem = document.createElement('video');
+        this.$videoElem.src = this.src;
+        this.$videoElem.preload = 'auto';
+        this.paused = true;
     }
 
     getNbSamples = () => {
@@ -31,47 +32,40 @@ class VideoAsset extends Asset {
         return this.info.duration / this.info.timescale;
     }
 
-    render = async (startFrame, nbSamples) => {
-        const $video = document.createElement("video");
-        $video.src = this.src;
-        $video.currentTime = startFrame / this.getFPS();
-        document.body.append($video);
+    getPosterSrc = async (startFrame) => {
+        const $canvas = document.createElement('canvas');
+        await this.render(startFrame, 'ONE_FRAME');
 
-        const getVideoTrack = async () => {
-            await $video.play();
-            this.pause = false;
-            const [track] = $video.captureStream().getVideoTracks();
-            $video.onended = e => track.stop();
-            return track;
+        $canvas.width = this.$videoElem.videoWidth;
+        $canvas.height = this.$videoElem.videoHeight;
+        $canvas.getContext('2d').drawImage(this.$videoElem, 0, 0, $canvas.width, $canvas.height);
+        const src = $canvas.toDataURL();
+        return src
+    }
+
+    render = async(startFrame, mode) => {
+        this.paused = false;
+        this.$videoElem.currentTime = startFrame / this.getFPS();
+        console.log(`
+            Given current time is: ${startFrame / this.getFPS()};
+            Real time is: ${this.$videoElem.currentTime}
+        `)
+
+        // document.body.append(this.$videoElem);
+        if (mode === 'FRAME_BY_FRAME') {
+            this.$videoElem.muted = false;
+            await this.$videoElem.play();
+        }
+        if (mode === 'ONE_FRAME') {
+            this.paused = true;
+            this.$videoElem.muted = true;
+            await this.$videoElem.play();
+            await this.$videoElem.pause();
         }
 
-        this.count = 0;
-        const track = await getVideoTrack();
-        const processor = new window.MediaStreamTrackProcessor(track);
-        const reader = processor.readable.getReader();
-        this.$offScreenCanvas.height = this.info.track_height;
-        this.$offScreenCanvas.width = this.info.track_width;
-        const ctx = this.$offScreenCanvas.getContext('2d');
-        
-        const readChunk = () => {
-            reader.read().then(async ({ done, value }) => {
-                if (this.count >= nbSamples || this.pause) {
-                    $video.pause();
-                    return;
-                }
-                else if (value) {
-                    const bitmap = await createImageBitmap(value);
-                    ctx.drawImage(bitmap, 0, 0, bitmap.width, bitmap.height);
-                    this.count++;
-                    value.close();
-                }
-                if (!done) {
-                    readChunk();
-                }
-            });
-        }
-
-        readChunk();
+        console.log('Rendering.....');
+        console.log('Start fream is: ' + startFrame);
+        console.log('Mode is: ' + mode);
     }
 
     getCounter = () => {
@@ -79,11 +73,16 @@ class VideoAsset extends Asset {
     }
 
     setPause = () => {
-        this.pause = true;
+        this.paused = true;
+        this.$videoElem.pause();
+    }
+
+    isPaused = () => {
+        return this.paused;
     }
 
     watch = () => {
-        return this.$offScreenCanvas;
+        return this.$videoElem;
     }
 
 

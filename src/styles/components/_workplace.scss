@@ -1,0 +1,27 @@
+.workplace {
+    padding-top: $xxl-size;
+    &__preview {
+        display: block;
+        text-align: center;
+
+        &__toolbar {
+            margin-top: $l-size;
+
+            button {
+                width: $xxl-size;
+                text-align: center;
+                font-size: $s-font;
+            }
+        }
+
+        &__canvas {
+            border: 1px solid #ccc;
+        }
+
+        &__timestamp {
+            color: $dark-cyan-blue;
+            font-size: $m-font;
+        }
+
+    }
+}

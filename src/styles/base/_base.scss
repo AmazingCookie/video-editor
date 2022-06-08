@@ -1,8 +1,11 @@
 html {
     font-size: 62.5%;
+    background-image: $bg-img;
+    background-repeat: repeat;
+    color: $crown-diamond;
+    height: fit-content;
 }
 
-.active {
-    font-size: large;
-    font-weight: 900;
+.content {
+    padding-left: 15%;
 }

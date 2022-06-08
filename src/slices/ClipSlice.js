@@ -4,18 +4,18 @@ import { Clip } from "../models";
 const clipDefaultState = {
     clipList: [],
     audioClipList: [],
-    current: 0,
     nChannels: 1,
     nbSamples: 0,
     fps: 25
 };
+
 
 const clipSlice = createSlice({
     name: 'clips',
     initialState: clipDefaultState,
     reducers: {
         addClip: (state, { payload }) => {
-            const { asset, startOffset, nbSamples, offset = state.current, channel = 0 } = payload;
+            const { asset, startOffset, nbSamples, offset = state.nbSamples, channel = 0, posterSrc } = payload;
 
             state.clipList = [
                 ...state.clipList,
@@ -24,14 +24,15 @@ const clipSlice = createSlice({
                     startOffset,
                     nbSamples,
                     asset,
-                    channel
+                    channel,
+                    posterSrc
                 })
             ];
 
             state.nbSamples += nbSamples;
         },
-        addVideoClip: (state, { payload }) => {
-            const { asset, startOffset, nbSamples, offset, channel = 0 } = payload;
+        addClipAtIndex: (state, { payload }) => {
+            const { asset, startOffset, nbSamples, offset, channel, posterSrc, index } = payload;
 
             state.clipList = [
                 ...state.clipList,
@@ -40,24 +41,89 @@ const clipSlice = createSlice({
                     startOffset,
                     nbSamples,
                     asset,
-                    channel
+                    channel,
+                    posterSrc
                 })
             ];
 
             state.nbSamples += nbSamples;
         },
-        setClipCurrent: (state, { payload }) => {
-            const { current } = payload;
-            state.current = current;
+        removeClip: (state, { payload }) => {
+            const { id } = payload;
+            const clipIndex = state.clipList.findIndex(clip => clip.id === id);
+            console.log(clipIndex);
+
+            if (clipIndex === -1)
+                return;
+
+            let newList = [...state.clipList];
+            const length = newList[clipIndex].nbSamples;
+
+            
+            const later = newList.slice(clipIndex + 1).map((clip) => {
+                const newClip = clip;
+                newClip.offset -= length;
+                return newClip;
+            })
+
+            state.clipList = [
+                ...newList.slice(0, clipIndex),
+                ...later
+            ];
+
+            state.nbSamples -= length;
         },
-        remove: (state, { payload }) => {
+        splitClip: (state, { payload }) => {
+            console.log('handle split');
+            const { clipIndex, offset_second, nbSample_first,
+                nbSample_second, startOffset_second, posterSrc_second } = payload;
+
+            const clip = state.clipList[clipIndex];
+
+            const newClip = new Clip({
+                offset: offset_second,
+                startOffset: startOffset_second,
+                nbSamples: nbSample_second,
+                asset: clip.asset,
+                channel: clip.channel,
+                posterSrc: posterSrc_second
+            })
+
+            console.log(`
+                        nbSample_first: ${nbSample_first}, 
+                        nbSample_second: ${nbSample_second}, 
+                        startOffset_second: ${startOffset_second},
+                        offset_second: ${offset_second}`)
+            const newList = [...state.clipList];
+            newList[clipIndex].nbSamples = nbSample_first;
+            console.log(newList);
+            console.log(newList.splice(clipIndex + 1, 0, newClip));
+            state.clipList = newList;
 
         },
+        swapClip: (state, { payload }) => {
+            const { id_first, id_second } = payload;
+            const clipIndex_first = state.clipList.findIndex(clip => clip.id === id_first);
+            const clipIndex_second = state.clipList.findIndex(clip => clip.id === id_second);
+
+            let newList = [...state.clipList];
+            [newList[clipIndex_first], newList[clipIndex_second]]
+                = [newList[clipIndex_second], newList[clipIndex_first]];
+
+            let length = 0;
+            newList = newList.map((clip) => {
+                clip.offset = length;
+                length += clip.nbSamples;
+                return clip;
+            })
+
+            state.clipList = newList;
+        }
     }
 })
 
 
 
-export const { addClip, setClipCurrent } = clipSlice.actions;
+export const { addClip, removeClip, splitClip, swapClip, addClipAtIndex } = clipSlice.actions;
 export default clipSlice.reducer;
 

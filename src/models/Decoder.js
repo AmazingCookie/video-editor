@@ -1,7 +1,7 @@
 import { wait } from "@testing-library/user-event/dist/utils";
 
 export class Decoder {
-    constructor() {
+    constructor(ref) {
         this.decoder = null;
         this.index = 0;
         this.offset = 0;
@@ -10,6 +10,8 @@ export class Decoder {
         this._frame_resolver = null;
         this.pendingFrames = [];
         this.maxPendings = 1000;
+
+        this.$frames = ref;
     }
 
     configure = (info) => {
@@ -44,26 +46,39 @@ export class Decoder {
     }
 
     handleFrame = (frame) => {
-        if (this.index >= this.start &&
-            this.count <= this.nbSamples) {
-            this.pendingFrames.push(frame);
-            this.count++;
-        }
-        else
-            frame.close();
+        const $canvas = document.createElement('canvas')
+        $canvas.className = "video-scrubber-frame"
+        $canvas.height = frame.codedHeight;
+        $canvas.width = frame.codedWidth;
 
-        if (this.pendingFrames.length && this._frame_resolver) {
-            this._frame_resolver(this.pendingFrames.shift());
-            this._frame_resolver = null;
-        }
+        $canvas.getContext('2d').drawImage(frame, 0, 0, frame.codedWidth, frame.codedHeight);
+
+        this.$frames.appendChild($canvas);
+
+        console.log('go');
+        frame.close();
         this.index++;
+
+        // if (this.index >= this.start &&
+        //     this.count <= this.nbSamples) {
+        //     this.pendingFrames.push(frame);
+        //     this.count++;
+        // }
+        // else
+        //     frame.close();
+
+        // if (this.pendingFrames.length && this._frame_resolver) {
+        //     this._frame_resolver(this.pendingFrames.shift());
+        //     this._frame_resolver = null;
+        // }
+        // this.index++;
     }
 
-    getFrame = () => {
-        // console.log('try to get frame!');
-        if (this.pendingFrames.length > 0)
-            return Promise.resolve(this.pendingFrames.shift());
-        return new Promise((resolver) => { this._frame_resolver = resolver });
-    }
+    // getFrame = () => {
+    //     // console.log('try to get frame!');
+    //     if (this.pendingFrames.length > 0)
+    //         return Promise.resolve(this.pendingFrames.shift());
+    //     return new Promise((resolver) => { this._frame_resolver = resolver });
+    // }
 
 }

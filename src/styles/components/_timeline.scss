@@ -1,7 +1,9 @@
 .timeline {
-    border: 15px solid green;
+    background-image: $golden-sea-img;
+    background-repeat: repeat;
+    border-radius: $xl-size $xs-size $xs-size $xs-size;
     padding: $m-size;
-    min-width: 30rem;
+    margin: $m-size;
 
     &__zoom {
         display: flex;
@@ -14,7 +16,7 @@
             padding: $s-size;
 
             &::-webkit-slider-runnable-track {
-                background: #CCC;
+                background: lighten($titanium, 20);
                 cursor: pointer;
             }
 
@@ -22,29 +24,62 @@
                 -webkit-appearance: none;
                 height: 10px;
                 width: 20px;
-                background: green;
+                background: $rose-red;
             }
         }
     }
 
     &__container {
-        background-color: lighten(gray, 30);
+        background-color: $crown-diamond;
         overflow-x: scroll;
         cursor: pointer;
 
         &__ruler {
             display: block;
             font-size: $s-size;
-            background-color: gray;
-            color: red;
+            background-color: $light-brown;
         }
 
-        &__channel {
+        &__channels {
             display: block;
-        }
-    }
 
-    h1 {
-        background-color: black;
+            &__channel {
+                overflow: hidden;
+
+                &__clip {
+                    display: inline-block;
+                    border-right: $xxs-size solid $light-brown;
+                    background-color: lighten($rose-red, 40);
+
+                    &__tool {
+                        position: relative;
+                        display: flex;
+                        overflow: hidden;
+
+                        button {
+                            opacity: 0.6;
+                            position: absolute;
+                            top: 0;
+                            left: 0;
+                            font-size: $xs-font;
+                            height: 30%;
+                            color: $rose-red;
+                            background-color: $crown-diamond;
+
+                            &:hover {
+                                opacity: 1;
+                                color: $crown-diamond;
+                                background-color: $rose-red;
+                            }
+                        }
+                    }
+
+                }
+
+            }
+
+        }
+
+
     }
 }

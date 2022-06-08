@@ -23,11 +23,18 @@ const assetSlice = createSlice({
                     })
                 ]
             
+        },
+        removeAsset: (state, { payload }) => {
+            const { id, src } = payload;
+            URL.revokeObjectURL(src);
+            state.assetList = state.assetList.filter((asset) => asset.id !== id);
+            console.log('asset list now: ');
+            console.log(state.assetList);
         }
     }
 })
 
-export const { addAsset } = assetSlice.actions;
+export const { addAsset, removeAsset } = assetSlice.actions;
 export default assetSlice.reducer;
 
 

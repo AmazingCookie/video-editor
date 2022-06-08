@@ -2,30 +2,32 @@ import React, { useRef, useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Channel from "./Channel";
 import Ruler from "./Ruler";
-import { setClipCurrent, addClip} from "../../slices";
+import { addClip, splitClip } from "../../slices";
 import { ItemTypes } from '../Constants';
 import { useDrop } from 'react-dnd';
+import { ImPageBreak } from "react-icons/im";
 
 /**
+ * 
  * @param {object} config
  * @param {number} config.scaleRatio scalling ratio for responsive design
  * @param {number} config.scale scale size (px)
  * @param {number} config.scaleTime time represented for one scale (frame)
  * @param {number} config.nbSamples total length of video sequences (frame)
  * @param {number} config.fps 
+ * 
  */
 export default (props) => {
 
 
     const [zoom, setZoom] = useState(5);        // sequence slider
     const [config, setConfig] = useState({});   // configuration
-    const [pointerX, setPointerX] = useState(0); // x of time pointer shown in sequence
+
     const divRef = useRef();
-
     const dispatch = useDispatch();
-    let { clipList, nChannels, nbSamples, fps, current } = useSelector((state) => state.clip);
+    let { clipList, nChannels, nbSamples, fps } = useSelector((state) => state.clip);
 
-    const [{ isOver }, ref] = useDrop(() => ({
+    const [{ isOver }, channelRef] = useDrop(() => ({
         accept: ItemTypes.ASSET,
         drop: monitor => addToClip(monitor.asset),
         collect: monitor => ({
@@ -55,77 +57,58 @@ export default (props) => {
         clipList.filter((clip) => (clip.channel === index))
     )
 
-    // based on current frame
-    const getPointerX = () => {
-        const x = current / config.scaleTime * config.scale;
-        return x;
-    }
-
-    const drawPointer = (ctx, height) => {
-        const timePointerWidth = 3;
-        const pointerColor = "#66ccff";
-
-        ctx.beginPath();
-        ctx.moveTo(pointerX, 0)
-        ctx.lineTo(pointerX, height);
-
-        ctx.strokeStyle = pointerColor;
-        ctx.lineWidth = timePointerWidth;
-
-        ctx.stroke();
-    }
-
-    const getMouseX = (event) => {
-        const $div = divRef.current;
-        const left = $div.getBoundingClientRect().x;
-        return event.pageX + $div.scrollLeft - left;
-    }
-
-
-    const addToClip = (asset) => {
-        console.log(asset);
-        console.log('Current frame: === ' + current);
+    const addToClip = async (asset) => {
         // ffmpeg.FS('writeFile', 'input.mp4', await fetchFile(tempFile.src));
         // await ffmpeg.run('-i', 'input.mp4', '-t', '5', 'out.mp4')
         // const data = ffmpeg.FS('readFile', 'out.mp4');
         // const result = URL.createObjectURL(new Blob([data.buffer], { type: 'video/mp4' }))
         // frameStart, frameEnd, offset
+       
+
+        console.log(asset.name);
+
+        const posterSrc = await asset.getPosterSrc(0);
         dispatch(addClip({
             asset: asset,
             startOffset: 0,
-            nbSamples: asset.samples.length
+            nbSamples: asset.samples.length,
+            posterSrc
         }))
-
     }
 
-    const handleClick = (e) => {
-        let newPointerX = getMouseX(e);
-        setPointerX(newPointerX);
 
-        const { nbSamples } = genConfig();
-        const $div = divRef.current;
-        const divWidth = $div.scrollWidth;
-        // console.log('pointer x is: ' + newPointerX);
-        // console.log('div width is: ' + divWidth);
-        // console.log(`num sample is ${nbSamples}`)
+    const handleSplit = async (e) => {
 
-        let currentFrame = Math.ceil(nbSamples * (newPointerX / divWidth));
-        console.log(currentFrame);
-        dispatch(setClipCurrent({
-            current: currentFrame
-        }));
+        console.log(props.current);
+        const clipIndex = clipList.findIndex(clip => clip.offset + clip.nbSamples > props.current &&
+            clip.offset < props.current);
+
+        if (clipIndex === -1) {
+            console.log('Invalid action: split');
+            return;
+        }
+        
+        const offset_second = props.current;
+        const { offset, startOffset, nbSamples, asset } = clipList[clipIndex];
+        const nbSample_first = offset_second - offset;
+        const nbSample_second = nbSamples - nbSample_first;
+        const startOffset_second = startOffset + nbSample_first;
+        const posterSrc_second = await asset.getPosterSrc(startOffset_second);
+
+        dispatch(splitClip({
+            clipIndex,
+            offset_second,
+            nbSample_first,
+            nbSample_second,
+            startOffset_second,
+            posterSrc_second
+        }))
     }
 
-    const updatePointerX = () => {
-        setConfig(genConfig());
-        setPointerX(getPointerX());
-    }
-
-    useEffect(updatePointerX, [zoom, current])
+    useEffect(() => setConfig(genConfig()), [zoom, clipList])
 
     return (
         <div className="timeline" >
-            This is the timeline.
             <div className="timeline__zoom">
                 <input className="timeline__zoom__slider"
                     type="range"
@@ -134,14 +117,15 @@ export default (props) => {
                     value={zoom}
                     onChange={e => setZoom(e.target.value)} />
             </div>
-            <div className="timeline__container" onClick={handleClick} ref={divRef}>
-                <Ruler _drawPointer={drawPointer} pointerX={pointerX} config={config} />
-                <div className="timeline__channls" ref={ref}>
+            <div className="timeline__tools">
+                <button className="timeline__tools_delete" onClick={handleSplit}><ImPageBreak /></button>
+            </div>
+            <div className="timeline__container" ref={divRef}>
+                <Ruler config={config} current={props.current} _setCurrentFrame={props._setCurrentFrame}  />
+                <div className="timeline__channls" ref={channelRef}>
                     {
                         [...Array(nChannels)].map((value, index) => (
                             <Channel
-                                _drawPointer={drawPointer}
-                                pointerX={pointerX}
                                 index={index}
                                 clips={getClipsInChannel(index)}
                                 config={config}

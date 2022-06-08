@@ -1,11 +1,35 @@
 // Colors
-$off-black: #20222b;
-$off-white: white;
+$titanium: #878681;
+$harbor-rat: #757d75;
+$dark-cyan-blue: #292e33;
+$slate-gray: #708090;
+$cadet-blue: #5f9ea0;
+$crown-diamond: #e8e9e8;
+$rose-red: #a25d5d;
+$light-brown: #ffa544;
 
-// Spacing
+
+// Spacing and Size
+$xxs-size: 0.1rem;
+$xs-size: 0.4rem;
 $s-size: 0.8rem;
 $m-size: 1.6rem;
 $l-size: 3.2rem;
 $xl-size: 6.4rem;
+$xxl-size: 9.6rem;
 
-// m-size
+// Text Size
+$xs-font: .5rem;
+$s-font: 1rem;
+$m-font: 2rem;
+$l-font: 3rem;
+$xl-font: 6rem;
+$xxl-font: 12rem;
+
+// Images
+$bg-img: url("../images/marble-background.jpg");
+$black-marble-img: url("../images/black-marble.jpg");
+$marble-img: url("../images/marble.jpg");
+$sea-img: url("../images/sea.jpg");
+$golden-sea-img: url("../images/golden-sea.jpg");
+$test-img: url("../images/2.jpg")

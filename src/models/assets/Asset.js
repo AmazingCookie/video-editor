@@ -13,6 +13,7 @@ class Asset {
         this.info = null;    // track information
         this.samples = null;
         this.getTrackInfo();
+
     }
 
     getTrackInfo = async () => {
@@ -30,9 +31,26 @@ class Asset {
         demuxer.start(this.info.id);
         this.samples = await demuxer.getSamples();
         console.log(this.samples);
-
         demuxer.flush();
+        
     }
+
+    decode = () => {
+        const decoder = new Decoder();
+        decoder.configure(this.info);
+        for (let sample of this.samples) {
+            const type = sample.is_sync ? "key" : "delta";
+            let chunk = new window.EncodedVideoChunk({
+                type,
+                data: sample.data,
+                duration: sample.duration,
+                timestamp: sample.cts
+            })
+            decoder.decode(chunk);
+        }
+    }
+
+
 
     // sourceOpen = async(event) => {
     //     const mediaSource = event.target;

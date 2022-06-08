@@ -34,8 +34,9 @@ function getDropTargetElementsAtPoint(x, y, dropTargets) {
 }
 
 // use custom function only if elementsFromPoint is not supported
-const backendOptions = {
+const opt = {
   enableMouseEvents: true,
+  enableKeyboardEvents: true,
   getDropTargetElementsAtPoint: !hasNative && getDropTargetElementsAtPoint
 }
 
@@ -44,7 +45,7 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   // <React.StrictMode>
   <Provider store={store}>
-    <DndProvider backend={TouchBackend} options={backendOptions}>
+    <DndProvider backend={TouchBackend} options={opt}>
       <AppRouter />
     </DndProvider>
   </Provider>

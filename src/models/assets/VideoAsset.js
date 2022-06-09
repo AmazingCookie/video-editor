@@ -7,6 +7,8 @@ class VideoAsset extends Asset {
         this.$videoElem = document.createElement('video');
         this.$videoElem.src = this.src;
         this.$videoElem.preload = 'auto';
+        this.$videoElem.visibility = "hidden";
+        this.$videoElem.autoplay = 'false';
         this.paused = true;
     }
 

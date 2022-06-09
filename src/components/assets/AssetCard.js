@@ -39,14 +39,12 @@ export default ({ asset }) => {
         console.log('remove asset: ' + asset.name);
     }
     const handleAdd = async () => {
-
-        console.log(asset.name);
-
         const posterSrc = await asset.getPosterSrc(0);
+
         dispatch(addClip({
             asset: asset,
             startOffset: 0,
-            nbSamples: asset.samples.length,
+            nbSamples: asset.getNbSamples(),
             posterSrc
         }));
     }

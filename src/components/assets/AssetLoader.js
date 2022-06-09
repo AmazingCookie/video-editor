@@ -15,6 +15,9 @@ const AssetLoader = () => {
     let { assetList } = useSelector((state) => state.asset);
 
     const convertVideo = async (file, src) => {
+        if (!ready) 
+            return null;
+
         ffmpeg.FS('writeFile', file.name, await fetchFile(src));
         // ffmpeg.run(`-i`, `${file.name}`);
         await ffmpeg.run(`-i`, `${file.name}`, `-c`, `copy`, `output.mp4`);
@@ -41,17 +44,13 @@ const AssetLoader = () => {
         }
 
         const src = URL.createObjectURL(file);
-        const videoUrl = file.name.slice(-3) === 'mp4' ?
-            src : await convertVideo(file, src);
 
-        if (videoUrl === null) {
-            alert('The selected format is not supported, try another one.');
-            return;
-        }
+        const videoUrl = file.name.slice(-3).toLowerCase() === 'mp4' ?
+            src : await convertVideo(file, src);
 
         dispatch(addAsset({
             name: file.name.slice(0, -4),
-            src: videoUrl
+            src: videoUrl || src
         }))
 
     }
@@ -69,7 +68,7 @@ const AssetLoader = () => {
         load();
     }
 
-    return !ready ? (<p>Loading</p>) : (
+    return (
         < div className='assets' >
             <label htmlFor="asset-upload" className="assets__upload">
                 <ImBoxAdd />

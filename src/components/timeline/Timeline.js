@@ -64,14 +64,13 @@ export default (props) => {
         // const result = URL.createObjectURL(new Blob([data.buffer], { type: 'video/mp4' }))
         // frameStart, frameEnd, offset
        
-
         console.log(asset.name);
 
         const posterSrc = await asset.getPosterSrc(0);
         dispatch(addClip({
             asset: asset,
             startOffset: 0,
-            nbSamples: asset.samples.length,
+            nbSamples: asset.getNbSamples(),
             posterSrc
         }))
     }

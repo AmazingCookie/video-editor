@@ -15,8 +15,6 @@ const AssetLoader = () => {
     let { assetList } = useSelector((state) => state.asset);
 
     const convertVideo = async (file, src) => {
-        const newName = `${file.name.slice(0, -4)}.mp4`;
-
         ffmpeg.FS('writeFile', file.name, await fetchFile(src));
         // ffmpeg.run(`-i`, `${file.name}`);
         await ffmpeg.run(`-i`, `${file.name}`, `-c`, `copy`, `output.mp4`);

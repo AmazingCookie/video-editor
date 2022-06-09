@@ -7,8 +7,11 @@ class VideoAsset extends Asset {
         this.$videoElem = document.createElement('video');
         this.$videoElem.src = this.src;
         this.$videoElem.preload = 'auto';
-        this.$videoElem.visibility = "hidden";
-        this.$videoElem.autoplay = 'false';
+        this.$videoElem.autoplay = false;
+        this.$videoElem.muted = true; 
+        this.$videoElem.display = 'none';
+        this.$videoElem.setAttribute('webkit-playsinline', 'webkit-playsinline');
+        this.$videoElem.setAttribute('playsinline', 'playsinline');
         this.paused = true;
     }
 

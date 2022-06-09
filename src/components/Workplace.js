@@ -2,7 +2,7 @@ import React, { useRef, useEffect, useState } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import Timeline from './timeline/Timeline';
 import { _throw } from "./Debug";
-import { ImPlay3, ImPause2, ImStop2 } from "react-icons/im";
+import { ImPlay3, ImPause2, ImStop2, ImEnlarge, ImShrink } from "react-icons/im";
 
 
 const Workplace = () => {
@@ -20,6 +20,7 @@ const Workplace = () => {
 
     let { clipList, nbSamples, fps } = useSelector((state) => state.clip);
     const [current, setCurrent] = useState(index);
+    const [fullScreen, setFullScreen] = useState(false);
     const fpsInterval = 1000 / fps;
 
     let frame = null;
@@ -35,8 +36,6 @@ const Workplace = () => {
         frame = clipList[clipIndex]?.asset.watch();
 
         const $canvas = canvasRef.current;
-        $canvas.width = Math.floor(window.innerWidth * 0.8);
-        $canvas.height = Math.floor(window.innerHeight * 0.6);
         const ctx = $canvas.getContext('2d');
         ctx.fillRect(0, 0, $canvas.width, $canvas.height);
 
@@ -98,8 +97,6 @@ const Workplace = () => {
 
     useEffect(() => {
         const $canvas = canvasRef.current;
-        $canvas.width = Math.floor(window.innerWidth * 0.8);
-        $canvas.height = Math.floor(window.innerHeight * 0.6);
         const ctx = $canvas.getContext('2d');
         ctx.fillRect(0, 0, $canvas.width, $canvas.height);
     }, [])
@@ -131,7 +128,7 @@ const Workplace = () => {
     const handleReset = () => {
         if (!clipList[clipIndex]?.asset.isPaused())
             setPause();
-            
+
         setCurrent(0);
         index = 0;
         clipIndex = 0;
@@ -146,6 +143,10 @@ const Workplace = () => {
         }
     }
 
+    const handleFullScreen = () => {
+        setFullScreen(!fullScreen);
+    }
+
     const generateTime = (current, fps) => {
         const hh = Math.floor(current / fps / 3600).toString().padStart(2, '0');
         const mm = Math.floor(current / fps / 60 % 60).toString().padStart(2, '0');
@@ -157,7 +158,11 @@ const Workplace = () => {
     return (
         <div className="workplace">
             <div className="workplace__preview">
-                <canvas className='workplace__preview__canvas' ref={canvasRef} />
+                <canvas className='workplace__preview__canvas' ref={canvasRef}>
+                </canvas>
+                <button className='workplace__preview__resize' onClick={handleFullScreen}>
+                    {fullScreen ? <ImShrink /> : <ImEnlarge />}
+                </button>
                 <div className="workplace__preview__toolbar">
                     <button onClick={handleStart}>
                         <ImPlay3 />

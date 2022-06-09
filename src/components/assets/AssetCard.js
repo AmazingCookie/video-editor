@@ -26,8 +26,10 @@ export default ({ asset }) => {
 
     const handleDelete = () => {
         clipList.forEach(clip => {
-            if (clip.asset.id === asset.id)
+            if (clip.asset.id === asset.id) {
+                clip.asset.setPause();
                 dispatch(removeClip({ id: clip.id }));
+            }
         });
 
         dispatch(removeAsset({

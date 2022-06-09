@@ -18,7 +18,7 @@ const Workplace = () => {
     let index = 0;
     let clipIndex = 0;
 
-    let { clipList, fps } = useSelector((state) => state.clip);
+    let { clipList, nbSamples, fps } = useSelector((state) => state.clip);
     const [current, setCurrent] = useState(index);
     const fpsInterval = 1000 / fps;
 
@@ -35,8 +35,8 @@ const Workplace = () => {
         frame = clipList[clipIndex]?.asset.watch();
 
         const $canvas = canvasRef.current;
-        $canvas.width = Math.floor(window.innerWidth * 0.7);
-        $canvas.height = Math.floor(window.innerHeight / 2);
+        $canvas.width = Math.floor(window.innerWidth * 0.8);
+        $canvas.height = Math.floor(window.innerHeight * 0.6);
         const ctx = $canvas.getContext('2d');
         ctx.fillRect(0, 0, $canvas.width, $canvas.height);
 
@@ -98,8 +98,8 @@ const Workplace = () => {
 
     useEffect(() => {
         const $canvas = canvasRef.current;
-        $canvas.width = Math.floor(window.innerWidth * 0.7);
-        $canvas.height = Math.floor(window.innerHeight / 2);
+        $canvas.width = Math.floor(window.innerWidth * 0.8);
+        $canvas.height = Math.floor(window.innerHeight * 0.6);
         const ctx = $canvas.getContext('2d');
         ctx.fillRect(0, 0, $canvas.width, $canvas.height);
     }, [])
@@ -157,6 +157,7 @@ const Workplace = () => {
     return (
         <div className="workplace">
             <div className="workplace__preview">
+                <canvas className='workplace__preview__canvas' ref={canvasRef} />
                 <div className="workplace__preview__toolbar">
                     <button onClick={handleStart}>
                         <ImPlay3 />
@@ -168,9 +169,8 @@ const Workplace = () => {
                         <ImPause2 />
                     </button>
                 </div>
-                <canvas className='workplace__preview__canvas' ref={canvasRef} />
                 <div className="workplace__preview__timestamp">
-                    <p>{generateTime(current, fps)}</p>
+                    <p>{generateTime(current, fps)} / {generateTime(nbSamples, fps)}</p>
                 </div>
             </div>
 

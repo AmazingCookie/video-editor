@@ -1,0 +1,58 @@
+.inspector {
+    padding-top: $xxl-size;
+    color: $dark-cyan-blue;
+    overflow: hidden;
+    display: flex;
+    justify-content: space-around;
+
+    &__drop {
+        padding: $xl-font;
+        text-align: center;
+        background-color: rgba($cadet-blue, .3);
+        height: 90rem;
+        width: 10%;
+        font-size: $m-font;
+    }
+
+    &__info {
+        background-color: $dark-cyan-blue;
+        color: $crown-diamond;
+        font-size: $m-font;
+        padding: $m-font;
+        width: 90%;
+        text-align: center;
+
+        &__key {
+            color: $light-brown;
+            font-size: $l-font;
+        }
+
+        &__value {}
+    }
+}
+
+@media only screen and (max-width: 600px) {
+    .inspector {
+        display: block;
+
+        &__drop {
+            width: 90%;
+            height: fit-content;
+            font-size: $m-font;
+            padding: $l-font;
+        }
+
+        &__info {
+            width: 90%;
+            font-size: $s-font;
+            min-height: 45rem;
+
+            &__key {
+                color: $light-brown;
+                font-size: $m-font;
+            }
+
+        }
+    }
+
+}

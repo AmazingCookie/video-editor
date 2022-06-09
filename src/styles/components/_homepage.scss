@@ -1,0 +1,63 @@
+.home-page {
+    padding: $xxl-font $xxl-font 0 $xxl-font;
+
+    h1 {
+        font-size: $xxl-font;
+        color: darken($crown-diamond, 15);
+        margin: $s-size;
+
+        span {
+            font-size: $xxl-font;
+            color: $rose-red;
+        }
+
+    }
+
+    h2 {
+        margin: $s-size;
+        font-size: $l-font;
+        color: lighten($rose-red, 20);
+
+        &:hover {
+            color: lighten($rose-red, 10);
+        }
+    }
+
+    &__contact {
+        position: fixed;
+        right: 0;
+        bottom: 0;
+        background-color: darken($dark-cyan-blue, 10);
+        padding: $m-size;
+        font-size: $m-font;
+
+        a {
+            color: $cadet-blue;
+            text-decoration: none;
+        }
+    }
+}
+
+@media only screen and (max-width: 600px) {
+    .home-page {
+        padding: $xl-font $s-font;
+        
+        h1 {
+            font-size: $xl-font;
+
+            span {
+                font-size: $xl-font;
+            }
+
+        }
+
+        h2 {
+            font-size: $m-font;
+        }
+
+        &__contact {
+            font-size: $s-font;
+            padding: $s-size;
+        }
+    }
+}

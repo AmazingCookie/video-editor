@@ -1,9 +1,7 @@
 .timeline {
-    background-image: $golden-sea-img;
-    background-repeat: repeat;
+    background-color: rgba($dark-cyan-blue, .1);
     border-radius: $xl-size $xs-size $xs-size $xs-size;
     padding: $m-size;
-    margin: $m-size;
 
     &__zoom {
         display: flex;
@@ -37,7 +35,7 @@
         &__ruler {
             display: block;
             font-size: $s-size;
-            background-color: $light-brown;
+            background-color: lighten($rose-red, 20);
         }
 
         &__channels {

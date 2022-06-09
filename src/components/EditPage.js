@@ -3,7 +3,7 @@ import Workplace from "./Workplace";
 
 
 export default () => (
-    <div>
+    <div className="edit-page">
         <AssetLoader />
         <Workplace />
     </div>

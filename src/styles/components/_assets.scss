@@ -1,27 +1,30 @@
 .assets {
     position: fixed;
     top: 0;
-    right: 0;
+    left: 10%;
     height: $xxl-size;
-    width: 85%;
-    background-image: $marble-img;
-    background-repeat: no-repeat;
-    background-size: cover;
-    border-radius: $xl-size $s-size $xl-size $s-size;
-    display: flex;
-
+    width: 90%;
+    background-color: rgba($crown-diamond, .4);
+    border-radius: 0 0 $xl-size 0;
+    z-index: 1000;
+    overflow-y: hidden;
 
     &__upload {
-        opacity: .8;
-        border-radius: 0 $xl-size;
-        background-image: $sea-img;
-        color: lighten($light-brown, 30);
-        padding: $l-size;
-        font-size: $l-font;
+        position: sticky;
+        top: 0;
+        left: 0;
+        height: $l-size;
+        width: $l-size;
+        border-radius: 0 0 $xl-size;
+        background-color: rgba($dark-cyan-blue, .1);
+        color: lighten($rose-red, 20);
+        padding: $m-size;
+        font-size: $m-font;
+        z-index: 100;
 
         &:hover {
-            opacity: 1;
-            color: $light-brown;
+            background-color: $rose-red;
+            color: $dark-cyan-blue;
         }
 
         input[type="file"] {
@@ -30,23 +33,21 @@
     }
 
     &__container {
-        width: 90%;
-        display: flex;
-        overflow-y: hidden;
+        padding-left: $xl-size;
+        padding-top: $s-size;
+        width: max-content;
 
         &__card {
-            border-radius: $xs-size;
-            background-color: $crown-diamond;
+            margin-bottom: -$l-size;
+            top: -$l-size;
+            display: inline-block;
             position: relative;
-            box-sizing: border-box;
-            width: 20%;
-            height: 90%;
-            margin: $xs-size;
+            border-radius: $s-size;
+            background-color: lighten($crown-diamond, 10);
+            margin-left: $xs-size;
+            width: 15rem;
+            height: $xxl-font;
             overflow: hidden;
-
-            &:hover {
-                background-color: lighten($crown-diamond, 10);
-            }
 
             &__title {
                 font-size: $s-font;
@@ -56,11 +57,12 @@
             }
 
             &__delete {
+                background-color: red;
                 border-radius: $xs-size $xs-size $xl-size $xl-size;
                 background-color: darken($crown-diamond, 20);
                 position: absolute;
                 top: 0;
-                right: 0;
+                left: 0;
                 font-size: $m-font;
                 border: none;
                 color: white;

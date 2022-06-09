@@ -4,16 +4,18 @@
     left: 0;
     top: 0;
     height: 100%;
-    width: 15%;
-    background-image: $sea-img;
+    width: 10%;
+    background-color: darken($cadet-blue, 30);
     text-align: center;
 
     h1 {
+        background-color: darken($cadet-blue, 40);
         font-size: $s-font;
 
     }
 
     &__link {
+        text-decoration: none;
         display: block;
         padding-top: $l-size;
         padding-bottom: $l-size;
@@ -22,6 +24,7 @@
     }
 
     &__link--active {
+        text-decoration: none;
         display: block;
         padding-top: $l-size;
         padding-bottom: $l-size;

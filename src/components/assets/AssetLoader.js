@@ -32,6 +32,11 @@ const AssetLoader = () => {
         const file = event.target.files?.item(0);
         event.target.value = "";
 
+        if (file.name.slice(-3) !== 'mp4') {
+            alert('The selected media format is not supported.');
+            return;
+        }
+
         for (let asset of assetList) {
             if (asset.name === file.name) {
                 alert('The file has already been added. Try a different name.');
@@ -52,7 +57,7 @@ const AssetLoader = () => {
         <div className='assets'>
             <label htmlFor="asset-upload" className="assets__upload">
                 <ImBoxAdd />
-                <input id="asset-upload" type='file' onChange={handleUploadAsset} accept="video/*" />
+                <input id="asset-upload" type='file' onChange={handleUploadAsset} accept="video/mp4" />
             </label>
 
             <div className='assets__container'>

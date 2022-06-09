@@ -1,26 +1,36 @@
 .workplace {
     padding-top: $xxl-size;
+
     &__preview {
         display: block;
         text-align: center;
 
-        &__toolbar {
-            margin-top: $l-size;
-
-            button {
-                width: $xxl-size;
-                text-align: center;
-                font-size: $s-font;
-            }
+        &__canvas {
         }
 
-        &__canvas {
-            border: 1px solid #ccc;
+        &__toolbar {
+            display: flex;
+            justify-content: center;
+            font-size: $s-font;
+
+            button {
+                border-radius: $xl-size;
+                padding: $m-size;
+            }
+
+            button:hover {
+                color: $crown-diamond;
+                background-color: black;
+            }
+
+
         }
 
         &__timestamp {
+            text-align: right;
+            padding: $s-size;
             color: $dark-cyan-blue;
-            font-size: $m-font;
+            font-size: $s-font;
         }
 
     }

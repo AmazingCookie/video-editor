@@ -1,14 +1,14 @@
 {
   "files": {
-    "main.css": "/video-editor/static/css/main.deaa3ab0.css",
-    "main.js": "/video-editor/static/js/main.ec9402bd.js",
+    "main.css": "/video-editor/static/css/main.d7441858.css",
+    "main.js": "/video-editor/static/js/main.a02f2973.js",
     "static/media/marble-background.jpg": "/video-editor/static/media/marble-background.ce87bf61d3431f7a3bcd.jpg",
     "index.html": "/video-editor/index.html",
-    "main.deaa3ab0.css.map": "/video-editor/static/css/main.deaa3ab0.css.map",
-    "main.ec9402bd.js.map": "/video-editor/static/js/main.ec9402bd.js.map"
+    "main.d7441858.css.map": "/video-editor/static/css/main.d7441858.css.map",
+    "main.a02f2973.js.map": "/video-editor/static/js/main.a02f2973.js.map"
   },
   "entrypoints": [
-    "static/css/main.deaa3ab0.css",
-    "static/js/main.ec9402bd.js"
+    "static/css/main.d7441858.css",
+    "static/js/main.a02f2973.js"
   ]
 }

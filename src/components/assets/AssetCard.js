@@ -1,9 +1,9 @@
 import React from 'react';
 import { useDrag } from 'react-dnd';
 import { useDispatch, useSelector } from 'react-redux';
-import { removeClip, removeAsset } from '../../slices';
+import { removeClip, removeAsset, addClip } from '../../slices';
 import { ItemTypes } from '../Constants';
-import { ImCancelCircle } from 'react-icons/im'
+import { ImCancelCircle, ImPlus } from 'react-icons/im'
 
 /**
  * Your Component
@@ -24,7 +24,7 @@ export default ({ asset }) => {
         [asset]
     )
 
-    const handleDelete = async() => {
+    const handleDelete = () => {
         clipList.forEach(clip => {
             if (clip.asset.id === asset.id)
                 dispatch(removeClip({ id: clip.id }));
@@ -35,6 +35,18 @@ export default ({ asset }) => {
             src: asset.src
         }));
         console.log('remove asset: ' + asset.name);
+    }
+    const handleAdd = async () => {
+
+        console.log(asset.name);
+
+        const posterSrc = await asset.getPosterSrc(0);
+        dispatch(addClip({
+            asset: asset,
+            startOffset: 0,
+            nbSamples: asset.samples.length,
+            posterSrc
+        }));
     }
 
     return (
@@ -48,6 +60,9 @@ export default ({ asset }) => {
             </div>
             <button className="assets__container__card__delete" onClick={handleDelete}>
                 <ImCancelCircle />
+            </button>
+            <button className="assets__container__card__add" onClick={handleAdd}>
+                <ImPlus />
             </button>
         </div>
     )

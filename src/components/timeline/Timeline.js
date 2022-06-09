@@ -108,7 +108,7 @@ export default (props) => {
     useEffect(() => setConfig(genConfig()), [zoom, clipList])
 
     return (
-        <div className="timeline" >
+        <div className="timeline" ref={channelRef}>
             <div className="timeline__zoom">
                 <input className="timeline__zoom__slider"
                     type="range"
@@ -122,7 +122,7 @@ export default (props) => {
             </div>
             <div className="timeline__container" ref={divRef}>
                 <Ruler config={config} current={props.current} _setCurrentFrame={props._setCurrentFrame}  />
-                <div className="timeline__channls" ref={channelRef}>
+                <div className="timeline__channls">
                     {
                         [...Array(nChannels)].map((value, index) => (
                             <Channel

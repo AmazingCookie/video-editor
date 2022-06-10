@@ -1,16 +1,20 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { createFFmpeg, fetchFile } from '@ffmpeg/ffmpeg';
 import { useDispatch, useSelector } from 'react-redux';
 import { ImBoxAdd } from "react-icons/im";
 
 import { addAsset } from '../../slices';
 import AssetCard from './AssetCard';
+import Popup from '../Popup';
 
 // show logs in the console
 const ffmpeg = createFFmpeg({ log: true });
 
 const AssetLoader = () => {
     const [ready, setReady] = useState(false);
+    
+    const [popupText, setPopupText] = useState('');
+
     const dispatch = useDispatch();
     let { assetList } = useSelector((state) => state.asset);
 
@@ -20,6 +24,7 @@ const AssetLoader = () => {
 
         ffmpeg.FS('writeFile', file.name, await fetchFile(src));
         // ffmpeg.run(`-i`, `${file.name}`);
+        setPopupText('Wait to be converted...');
         await ffmpeg.run(`-i`, `${file.name}`, `-c`, `copy`, `output.mp4`);
         const data = ffmpeg.FS('readFile', `output.mp4`);
 
@@ -37,8 +42,8 @@ const AssetLoader = () => {
 
 
         for (let asset of assetList) {
-            if (asset.name === file.name) {
-                alert('The file has already been added. Try a different name.');
+            if (asset.name === file.name.slice(0, -4)) {
+                setPopupText('The file has already been added. Try a different name.');
                 return;
             }
         }
@@ -52,8 +57,8 @@ const AssetLoader = () => {
             name: file.name.slice(0, -4),
             src: videoUrl || src
         }))
-
     }
+
 
     useEffect(() => {
         initffmpeg();
@@ -68,8 +73,15 @@ const AssetLoader = () => {
         load();
     }
 
+    useEffect(() => {
+        setTimeout(() => {
+            setPopupText('');
+        }, 3000);
+    }, [popupText])
+
     return (
         < div className='assets' >
+            {popupText && <Popup text={popupText}/>}
             <label htmlFor="asset-upload" className="assets__upload">
                 <ImBoxAdd />
                 <input id="asset-upload" type='file' onChange={handleUploadAsset} accept="video/*" />
@@ -85,4 +97,4 @@ const AssetLoader = () => {
 
 }
 
-export default AssetLoader;
+export default React.memo(AssetLoader);

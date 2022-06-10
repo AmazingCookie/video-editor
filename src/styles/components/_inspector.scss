@@ -6,12 +6,17 @@
     justify-content: space-around;
 
     &__drop {
+        opacity: .5;
         padding: $xl-font;
         text-align: center;
         background-color: rgba($cadet-blue, .3);
         height: 90rem;
         width: 10%;
         font-size: $m-font;
+
+        &:hover {
+            opacity: 1;
+        }
     }
 
     &__info {

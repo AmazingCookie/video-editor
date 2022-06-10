@@ -99,6 +99,10 @@ const Workplace = () => {
         const $canvas = canvasRef.current;
         const ctx = $canvas.getContext('2d');
         ctx.fillRect(0, 0, $canvas.width, $canvas.height);
+    
+        return () => {
+            setPause();
+        }
     }, [])
 
     // useEffect(() => {
@@ -122,7 +126,7 @@ const Workplace = () => {
 
     const renderClip = async (mode) => {
         const clip = clipList[clipIndex];
-        await clip?.asset.render(clip.startOffset + (index - clip.offset), mode);
+        await clip?.asset.render(clip.startOffset + (index - clip.offset), mode, clip.volume);
     }
 
     const handleReset = () => {
@@ -158,9 +162,11 @@ const Workplace = () => {
     return (
         <div className="workplace">
             <div className="workplace__preview">
-                <canvas className='workplace__preview__canvas' ref={canvasRef}>
+                <canvas className={fullScreen ? 'workplace__preview__canvas workplace__preview__canvas--full-screen' :
+                    'workplace__preview__canvas'} ref={canvasRef}>
                 </canvas>
-                <button className='workplace__preview__resize' onClick={handleFullScreen}>
+                <button className={fullScreen ? 'workplace__preview__resize workplace__preview__resize--full-screen' :
+                    'workplace__preview__resize'} onClick={handleFullScreen}>
                     {fullScreen ? <ImShrink /> : <ImEnlarge />}
                 </button>
                 <div className="workplace__preview__toolbar">

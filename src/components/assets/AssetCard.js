@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useCallback, useEffect, useMemo } from 'react';
 import { useDrag } from 'react-dnd';
 import { useDispatch, useSelector } from 'react-redux';
+import throttle from 'lodash.throttle'
 import { removeClip, removeAsset, addClip } from '../../slices';
 import { ItemTypes } from '../Constants';
 import { ImCancelCircle, ImPlus } from 'react-icons/im'
@@ -38,6 +39,7 @@ export default ({ asset }) => {
         }));
         console.log('remove asset: ' + asset.name);
     }
+
     const handleAdd = async () => {
         const posterSrc = await asset.getPosterSrc(0);
 
@@ -48,6 +50,16 @@ export default ({ asset }) => {
             posterSrc
         }));
     }
+
+    const throttlingAdd = useCallback(
+        throttle(handleAdd, 1000)
+    , [])
+
+    useEffect(() => {
+        return () => {
+            throttlingAdd.cancel();
+        }
+    }, [])
 
     return (
         <div className="assets__container__card" ref={dragRef} style={{
@@ -61,7 +73,7 @@ export default ({ asset }) => {
             <button className="assets__container__card__delete" onClick={handleDelete}>
                 <ImCancelCircle />
             </button>
-            <button className="assets__container__card__add" onClick={handleAdd}>
+            <button className="assets__container__card__add" onClick={throttlingAdd}>
                 <ImPlus />
             </button>
         </div>

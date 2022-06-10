@@ -48,8 +48,17 @@ class VideoAsset extends Asset {
         return src
     }
 
-    render = async(startFrame, mode) => {
+    setVolume = (volume) => {
+        this.$videoElem.volume = volume;
+    }
+
+    getVolume = () => {
+        return this.$videoElem.volume;
+    }
+
+    render = async(startFrame, mode, volume = .5) => {
         this.paused = false;
+        this.$videoElem.volume = volume;
         this.$videoElem.currentTime = startFrame / this.getFPS();
         console.log(`
             Given current time is: ${startFrame / this.getFPS()};

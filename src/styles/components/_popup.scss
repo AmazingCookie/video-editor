@@ -1,0 +1,20 @@
+.popup {
+    z-index: 1000;
+    position: fixed;
+    left: 10%;
+    top: 10%;
+    height: $m-font;
+    width: 100%;
+    opacity: .9;
+    padding: $s-size;
+    font-size: $m-font;
+    background-color: red;
+}
+
+@media only screen and (max-width: 600px) {
+    .popup {
+        padding: $xs-size;
+        font-size: $s-font;
+    }
+
+}

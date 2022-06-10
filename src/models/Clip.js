@@ -9,6 +9,7 @@ class Clip {
         this.nbSamples = nbSamples;
         this.asset = asset;
         this.posterSrc = posterSrc;
+        this.volume = 0.5;
 
         console.log(`Add clip: start is ${this.startOffset}, length is ${this.nbSamples}, offset is ${this.offset}`)
     }

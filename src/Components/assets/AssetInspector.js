@@ -3,8 +3,9 @@ import { useDrop } from 'react-dnd';
 import { ItemTypes } from '../Constants';
 
 
-export default () => {
+export default React.memo(() => {
     const [info, setInfo] = useState({});
+    const [assetName, setAssetName] = useState("");
 
     const extractInfo = (asset) => {
         const { name, codec, type, created, modified, duration, timescale, nb_samples,
@@ -13,7 +14,7 @@ export default () => {
         console.log(asset.info);
 
         const formattedInfo = {
-            name, 
+            name,
             type,
             codec,
             duration: duration / timescale + ' sec',
@@ -27,6 +28,7 @@ export default () => {
             language,
         };
         setInfo(formattedInfo);
+        setAssetName(asset.name);
     }
 
 
@@ -37,11 +39,11 @@ export default () => {
             isOver: !!monitor.isOver(),
         }),
     }))
-    
+
     return (
         <div className="inspector">
             <div className="inspector__drop" ref={dropRef} >
-                Please drop your asset here.
+                {assetName || "Please drop your asset here." }
             </div>
 
             <div className="inspector__info">
@@ -57,4 +59,4 @@ export default () => {
             </div>
         </div>
     );
-}
+})

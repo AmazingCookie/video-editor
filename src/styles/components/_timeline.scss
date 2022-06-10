@@ -49,10 +49,51 @@
                     border-right: $xxs-size solid $light-brown;
                     background-color: lighten($rose-red, 40);
 
+
                     &__tool {
                         position: relative;
                         display: flex;
                         overflow: hidden;
+
+                        &__volume {
+                            position: absolute;
+                            padding: $xs-size;
+                            opacity: .5;
+                            bottom: 0;
+                            left: 0;
+                            z-index: 100;
+                            color: $crown-diamond;
+                            font-size: $s-font;
+       
+                            input {
+                                position: absolute;
+                                margin-left: $xs-size;
+                                display: none;
+                                -webkit-appearance: none;
+                                border: none;
+
+                                &::-webkit-slider-runnable-track {
+                                    height: $s-font;
+                                    background: $rose-red;
+                                    cursor: pointer;
+                                }
+
+                                &::-webkit-slider-thumb {
+                                    -webkit-appearance: none;
+                                    height: $s-font;
+                                    width: $s-font;
+                                    background: lighten($titanium, 40);
+                                }
+                            }
+
+                            &:hover {
+                                opacity: 1;
+                                input {
+                                    display: inline-block;
+                                }
+                            }
+
+                        }
 
                         button {
                             opacity: 0.6;
@@ -71,9 +112,7 @@
                             }
                         }
                     }
-
                 }
-
             }
 
         }

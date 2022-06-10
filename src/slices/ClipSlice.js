@@ -118,12 +118,22 @@ const clipSlice = createSlice({
             })
 
             state.clipList = newList;
+        },
+        changeClipVolume: (state, { payload }) => {
+            const { id, volume } = payload;
+            const clip = state.clipList.find((clip) => clip.id === id);
+            clip.volume = volume;
+            console.log(`
+                id: ${id},
+                volume: ${volume}
+            `)
+            clip.asset.setVolume(volume);
         }
     }
 })
 
 
 
-export const { addClip, removeClip, splitClip, swapClip, addClipAtIndex } = clipSlice.actions;
+export const { addClip, removeClip, splitClip, swapClip, addClipAtIndex, changeClipVolume } = clipSlice.actions;
 export default clipSlice.reducer;
 

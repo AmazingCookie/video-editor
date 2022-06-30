@@ -35,8 +35,8 @@ class Asset {
         
     }
 
-    decode = () => {
-        const decoder = new Decoder();
+    decode = (start) => {
+        const decoder = new Decoder(start);
         decoder.configure(this.info);
         for (let sample of this.samples) {
             const type = sample.is_sync ? "key" : "delta";

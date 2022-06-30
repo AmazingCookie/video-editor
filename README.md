@@ -53,7 +53,6 @@
 
 # Logs
 
-13/05/2022 - In terms of extracting image sequences from videos, consider the use of WebCodecs API instead of native methods such as `setTimeOut`.
 
 17/05/2022 - Solve the problem that the video is loaded incompletedly while adding to sequence.
 
@@ -64,7 +63,9 @@
 
 21/05/2022 - Implement the timeline for video editing.
 
-23/05/2022 - Add React-DnD. 
+23/05/2022 - Add React-DnD and support drag and drop of clip and asset cards. 
 
 01/06/2022 - Implement asset cards and enable the drag function.
+
+...
 

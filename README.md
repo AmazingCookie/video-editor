@@ -20,7 +20,7 @@
     - Move the pointer to the break point, and click at the split tool at the top of the timeline
     - The clip will be separated into two automatically while the others remained the same.
 
-Timeline:
+## Timeline:
 1.	Zoom:
     - Adjust the interval of the timeline by switching values of the slider
 2.	Jump:
@@ -30,13 +30,12 @@ Timeline:
 3.	Playback: 
     - The pointer will move based on the current timestamp.
 
-Preview:
+## Preview:
 1.	Render one frame:
     - While the clip is paused, only a single frame will be rendered each time.
 2.	Render frame by frame:
     - While the clip starts playing, every frame will be rendered until it reaches the end or paused.
 
----
 
 # Technical Aspects
 1.	Use React-Redux to support the access of asset and clip lists.

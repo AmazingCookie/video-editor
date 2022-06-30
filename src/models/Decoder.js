@@ -3,6 +3,8 @@ import { wait } from "@testing-library/user-event/dist/utils";
 export class Decoder {
     constructor(ref) {
         this.decoder = null;
+
+        this.start = 0;
         this.index = 0;
         this.offset = 0;
 
@@ -46,14 +48,16 @@ export class Decoder {
     }
 
     handleFrame = (frame) => {
-        const $canvas = document.createElement('canvas')
-        $canvas.className = "video-scrubber-frame"
-        $canvas.height = frame.codedHeight;
-        $canvas.width = frame.codedWidth;
+        // const $canvas = document.createElement('canvas')
+        // $canvas.className = "video-scrubber-frame"
+        // $canvas.height = frame.codedHeight;
+        // $canvas.width = frame.codedWidth;
 
-        $canvas.getContext('2d').drawImage(frame, 0, 0, frame.codedWidth, frame.codedHeight);
+        // $canvas.getContext('2d').drawImage(frame, 0, 0, frame.codedWidth, frame.codedHeight);
 
-        this.$frames.appendChild($canvas);
+        // this.$frames.appendChild($canvas);
+
+        this.pendingFrames.push(frame);
 
         console.log('go');
         frame.close();
@@ -67,18 +71,18 @@ export class Decoder {
         // else
         //     frame.close();
 
-        // if (this.pendingFrames.length && this._frame_resolver) {
-        //     this._frame_resolver(this.pendingFrames.shift());
-        //     this._frame_resolver = null;
-        // }
+        if (this.pendingFrames.length && this._frame_resolver) {
+            this._frame_resolver(this.pendingFrames.shift());
+            this._frame_resolver = null;
+        }
         // this.index++;
     }
 
-    // getFrame = () => {
-    //     // console.log('try to get frame!');
-    //     if (this.pendingFrames.length > 0)
-    //         return Promise.resolve(this.pendingFrames.shift());
-    //     return new Promise((resolver) => { this._frame_resolver = resolver });
-    // }
+    getFrame = () => {
+        // console.log('try to get frame!');
+        if (this.pendingFrames.length > 0)
+            return Promise.resolve(this.pendingFrames.shift());
+        return new Promise((resolver) => { this._frame_resolver = resolver });
+    }
 
 }

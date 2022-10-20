@@ -5,6 +5,7 @@ import { ImBoxAdd } from "react-icons/im";
 
 import { addAsset } from '../../slices';
 import AssetCard from './AssetCard';
+import AssetInspector from "./AssetInspector";
 import Popup from '../Popup';
 
 // show logs in the console
@@ -92,7 +93,9 @@ const AssetLoader = () => {
                     <AssetCard asset={asset} />
                 ))}
             </div>
+            <AssetInspector />
         </div >
+
     )
 
 }

@@ -173,9 +173,6 @@ const Workplace = () => {
             <div className="workplace__preview">
                 <h1 className="workplace__preview__title">Preview</h1>
                 <div className="workplace__preview__container" ref={containerRef}><canvas width={4000} height={4000} ref={canvasRef} /></div>
-                <div className="workplace__preview__timestamp">
-                    <p>{generateTime(current, fps)} / {generateTime(nbSamples, fps)}</p>
-                </div>
                 <div className="workplace__preview__toolbar">
                     <button onClick={handleStart}>
                         <ImPlay3 />
@@ -187,7 +184,9 @@ const Workplace = () => {
                         <ImPause2 />
                     </button>
                 </div>
-               
+                <div className="workplace__preview__timestamp">
+                    <p>{generateTime(current, fps)} / {generateTime(nbSamples, fps)}</p>
+                </div>
             </div>
 
             <Timeline current={current} _setCurrentFrame={setCurrentFrame} />

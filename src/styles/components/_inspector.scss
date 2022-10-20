@@ -1,63 +1,66 @@
 .inspector {
-    padding-top: $s-size;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 45%;
+    width: 100%;
+    margin: 10% 2.5%;
     color: $dark-cyan-blue;
     overflow: hidden;
     display: flex;
+    flex-direction: column;
     justify-content: space-around;
 
-    &__drop {
+    &__info {
+        height: 100%;
+        width: 95%;
+        box-sizing: border-box;
         opacity: .5;
-        padding: $xl-font;
-        text-align: center;
-        background-color: rgba($cadet-blue, .3);
-        height: 90rem;
-        width: 10%;
+        background-color: lighten($dark-black, 20);
+        color: white;
         font-size: $m-font;
+        padding: $m-font;
+        text-align: left;
+        overflow-y: auto;
+        overflow-x: hidden;
+        border-radius: $l-size;
+
+        &__alert {
+            position: relative;
+            top: 40%;
+            padding: 10%;
+            font-size: $l-font;
+        }
+
+        &::-webkit-scrollbar {
+            height: 100%;
+        }
+
+        &::-webkit-scrollbar-track {
+            border-radius: $xxl-size;
+            background-color: black;
+            box-shadow: inset 0 0 .4rem grey;
+        }
+
+        &::-webkit-scrollbar-thumb {
+            background-color: lighten(black, 20);
+            box-shadow: inset 0 0 1rem $dark-black;
+        }
+
+        &__key {
+            color: $light-brown;
+            font-size: $m-font;
+        }
 
         &:hover {
             opacity: 1;
         }
     }
-
-    &__info {
-        background-color: $dark-cyan-blue;
-        color: $dark-black;
-        font-size: $m-font;
-        padding: $m-font;
-        width: 90%;
-        text-align: center;
-
-        &__key {
-            color: $light-brown;
-            font-size: $l-font;
-        }
-
-        &__value {}
-    }
 }
 
 @media only screen and (max-width: 600px) {
     .inspector {
-        display: block;
-
-        &__drop {
-            width: 90%;
-            height: fit-content;
-            font-size: $m-font;
-            padding: $l-font;
-        }
-
-        &__info {
-            width: 90%;
-            font-size: $s-font;
-            min-height: 45rem;
-
-            &__key {
-                color: $light-brown;
-                font-size: $m-font;
-            }
-
-        }
+        visibility: hidden;
     }
 
 }

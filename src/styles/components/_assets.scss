@@ -4,32 +4,34 @@
     position: absolute;
     left: 5vw;
     top: 0;
-    background-color: $dark-black;
     display: flex;
     flex-wrap: wrap;
     flex-direction: row;
     align-items: flex-start;
-    overflow-y: auto;
-    overflow-x: hidden;
     font-family: papyrus;
+    box-sizing: border-box;
+    background: linear-gradient(lighten($dark-black, 10), black);
 
     &__title {
+        visibility: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: center;
         position: absolute;
         top: 0;
         left: 0;
-        background-color: black;
         color: $harbor-rat;
         position: absolute;
-        font-size: $m-font;
+        font-size: $s-font;
         width: 100%;
-        height: 3rem;
+        height: 2%;
         margin-top: 0;
         padding-top: 0;
     }
 
     &__upload {
         position: absolute;
-        top: 3rem;
+        top: 0;
         left: 0;
         height: $l-size;
         width: $l-size;
@@ -51,16 +53,38 @@
     }
 
     &__container {
+        box-sizing: border-box;
+        width: 95%;
+        height: 45%;
+        border: .1rem $cadet-blue solid;
+        border-radius: $l-size;
+        margin: 2.5%;
         position: absolute;
-        top: 30px;
         padding-left: $xl-size;
         padding-top: $s-size;
+        overflow-y: auto;
+        overflow-x: hidden;
+
+        &::-webkit-scrollbar {
+            height: 100%;
+        }
+
+        &::-webkit-scrollbar-track {
+            border-radius: $xxl-size;
+            background-color: black;
+            box-shadow: inset 0 0 .4rem grey;
+        }
+
+        &::-webkit-scrollbar-thumb {
+            background-color: lighten(black, 20);
+            box-shadow: inset 0 0 1rem $dark-black;
+        }
 
         &__card {
             display: inline-block;
             position: relative;
             border-radius: $s-size;
-            background-color: lighten($dark-black, 10);
+            background-color: lighten($dark-black, 20);
             margin-left: $xs-size;
             width: 15rem;
             height: $xxl-font;
@@ -68,7 +92,7 @@
 
             &__title {
                 font-size: $s-font;
-                color: $cadet-blue;
+                color: white;
                 text-align: center;
                 padding: $l-size;
             }
@@ -135,7 +159,9 @@
         }
 
         &__container {
+            height: 100%;
             top: 0;
+
             &__card {
                 height: 13vh;
             }

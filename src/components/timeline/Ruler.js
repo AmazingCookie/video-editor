@@ -10,7 +10,7 @@ import React, { useEffect, useRef } from "react";
  */
 
 export default (props) => {
-    const defaultHeight = 15;
+    const defaultHeight = 30;
     const defaultFontSize = defaultHeight * 0.5;
     const defaultLineWidth = 0.5;
     const font = 'Arial';
@@ -39,6 +39,8 @@ export default (props) => {
         $rulerCanvas.width = Math.ceil(width * scaleRatio);
 
         for (let i = 0; i < Math.ceil(nbSamples / scaleTime); i++) {
+            ctx.fillStyle = 'white';
+            ctx.strokeStyle = 'white';
             ctx.beginPath();
             let lineWidth = defaultLineWidth * scaleRatio;
 
@@ -64,7 +66,7 @@ export default (props) => {
         }
 
         const timePointerWidth = 3;
-        const pointerColor = "#66ccff";
+        const pointerColor = "white";
 
         ctx.beginPath();
         const pointerX = getPointerX();

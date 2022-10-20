@@ -5,16 +5,15 @@ import { ItemTypes } from '../Constants';
 
 export default React.memo(() => {
     const [info, setInfo] = useState({});
-    const [assetName, setAssetName] = useState("");
 
     const extractInfo = (asset) => {
-        const { name, codec, type, created, modified, duration, timescale, nb_samples,
+        const {codec, type, created, modified, duration, timescale, nb_samples,
             track_height, track_width, language, layer, bitrate } = asset.info;
 
         console.log(asset.info);
 
         const formattedInfo = {
-            name,
+            name: asset.name,
             type,
             codec,
             duration: duration / timescale + ' sec',
@@ -28,7 +27,6 @@ export default React.memo(() => {
             language,
         };
         setInfo(formattedInfo);
-        setAssetName(asset.name);
     }
 
 
@@ -42,12 +40,8 @@ export default React.memo(() => {
 
     return (
         <div className="inspector">
-            <div className="inspector__drop" ref={dropRef} >
-                {assetName || "Please drop your asset here." }
-            </div>
-
-            <div className="inspector__info">
-                {Object.keys(info).length === 0 && "No info to show."}
+            <div className="inspector__info" ref={dropRef}>
+                {Object.keys(info).length === 0 && <div className="inspector__info__alert">You can drop your asset here to view its detail.</div>}
                 {Object.entries(info).map(([key, value]) => {
                     return (
                         <p>

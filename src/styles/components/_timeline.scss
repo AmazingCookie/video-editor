@@ -8,6 +8,7 @@
     padding: $m-size;
     overflow: auto;
     background-color: darken($rose-red, 45);
+    border-radius: $xl-size;
 
     &__tools {
         display: flex;
@@ -52,7 +53,7 @@
 
 
     &__container {
-        background-color: $harbor-rat;
+        background-color: darken($harbor-rat, 10);
         overflow-x: scroll;
         cursor: pointer;
 

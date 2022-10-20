@@ -12,14 +12,14 @@ const ffmpeg = createFFmpeg({ log: true });
 
 const AssetLoader = () => {
     const [ready, setReady] = useState(false);
-    
+
     const [popupText, setPopupText] = useState('');
 
     const dispatch = useDispatch();
     let { assetList } = useSelector((state) => state.asset);
 
     const convertVideo = async (file, src) => {
-        if (!ready) 
+        if (!ready)
             return null;
 
         ffmpeg.FS('writeFile', file.name, await fetchFile(src));
@@ -81,12 +81,12 @@ const AssetLoader = () => {
 
     return (
         < div className='assets' >
-            {popupText && <Popup text={popupText}/>}
-            <label htmlFor="asset-upload" className="assets__upload">
+            <h1 className='assets__title'>Assets</h1>
+            {popupText && <Popup text={popupText} />}
+            <label htmlFor="asset__upload" className="assets__upload">
                 <ImBoxAdd />
-                <input id="asset-upload" type='file' onChange={handleUploadAsset} accept="video/*" />
+                <input id="asset__upload" type='file' onChange={handleUploadAsset} accept="video/*" />
             </label>
-
             <div className='assets__container'>
                 {assetList && assetList.map((asset) => (
                     <AssetCard asset={asset} />
@@ -97,4 +97,4 @@ const AssetLoader = () => {
 
 }
 
-export default React.memo(AssetLoader);
+export default AssetLoader;

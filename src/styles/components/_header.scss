@@ -1,37 +1,51 @@
 .header {
+    display: flex;
+    flex-direction: column;
     font-size: $l-font;
     position: fixed;
     left: 0;
     top: 0;
-    height: 100%;
-    width: 10%;
-    background-color: darken($cadet-blue, 30);
+    height: 100vh;
+    width: 5vw;
+    background-color: darken($cadet-blue, 70);
     text-align: center;
 
     h1 {
-        background-color: darken($cadet-blue, 40);
         font-size: $s-font;
+    }
 
+    a {
+        text-decoration: none;
+        display: block;
+        padding: $l-size 0;
+        font-size: $m-font;
     }
 
     &__link {
-        text-decoration: none;
-        display: block;
-        padding-top: $l-size;
-        padding-bottom: $l-size;
-        font-size: $s-font;
-        color: $crown-diamond;
-    }
+        color: lighten($dark-black,30);
 
-    &__link--active {
-        text-decoration: none;
-        display: block;
-        padding-top: $l-size;
-        padding-bottom: $l-size;
-        font-size: $s-font;
-        color: $rose-red;
-        background-color: rgba($crown-diamond, 0.9);
+        &--active {
+            color: $light-brown;
+            background-color: rgba($dark-black, 0.9);
+        }
     }
+}
 
+@media only screen and (max-width: 600px) {
+    .header {
+        flex-direction: row;
+        position: fixed;
+        left: 0;
+        top: 0;
+        height: 10%;
+        width: 100%;
+
+        a {
+            display: inline-block;
+            width: 100%;
+            padding-left: 0 $s-size;
+            font-size: $s-font;
+        }
+    }
 
 }

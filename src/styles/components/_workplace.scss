@@ -1,69 +1,94 @@
 .workplace {
-    padding-top: $s-size;
+    display: block;
+    height: 100vh;
+    width: 70vw;
+    position: absolute;
+    left: 30vw;
+    top: 0;
+    overflow: auto;
+    background-color: darken($rose-red, 45);
+    font-family: papyrus;
 
     &__preview {
-        position: relative;
         display: block;
-        text-align: center;
+        height: 80%;
+        width: 100%;
 
-        &__canvas {
-            height: 80%;
-            width: 80%;
-
-            &--full-screen {
-                z-index: 1000;
-                position: fixed;
-                height: 100%;
-                width: 100%;
-                left: 0;
-                top: 0;
-                background-color: black;
-            }
+        &__title {
+            position: absolute;
+            top: 0;
+            left: 0;
+            background-color: black;
+            color: white;
+            font-size: $m-font;
+            width: 100%;
+            height: 3rem;
+            margin-top: 0;
+            padding-top: 0;
         }
 
-        &__resize {
-            opacity: 0.4;
-            position: absolute;
-            right: 10%;
-            top: 0;
-            z-index: 100;
-
-            &:hover {
-                opacity: 1;
-            }
-
-            &--full-screen {
-                z-index: 1001;
-                position: fixed;
-                right: 0;
-                top: 0;
-            }
+        &__container {
+            width: 100%;
+            height: 85%;
         }
 
         &__toolbar {
+            width: 100%;
+            height: 5%;
             display: flex;
             justify-content: center;
-            font-size: $s-font;
+            font-size: $m-font;
+            overflow: visible;
 
             button {
+                background-color: $rose-red;
+                color: white;
+                width: 100%;
                 border-radius: $xl-size;
-                padding: $m-size;
+                padding: $s-size;
             }
 
             button:hover {
-                color: $crown-diamond;
+                color: $harbor-rat;
                 background-color: black;
+                border-color: $harbor-rat;
             }
 
 
         }
 
         &__timestamp {
-            text-align: right;
-            padding: $s-size;
-            color: $dark-cyan-blue;
-            font-size: $s-font;
+            width: 100%;
+            height: 5%;
+            text-align: center;
+            color: $harbor-rat;
+            font-size: $m-font;
         }
 
+    }
+}
+
+@media only screen and (max-width: 600px) {
+    .workplace {
+        width: 100vw;
+        height: auto;
+        min-height: 80vh;
+        left: 0;
+        top: 20vh;
+
+        &__preview {
+            &__title {
+                visibility: hidden;
+            }
+
+            &__container {
+                width: 100%;
+                height: 50vh;
+            }
+
+            &__toolbar {
+                font-size: $s-size;
+            }
+        }
     }
 }

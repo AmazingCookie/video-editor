@@ -38,8 +38,8 @@
 
 
 # Technical Aspects
-1.	Use React-Redux to support the access of asset and clip lists.
-2.	Use React-Router to support the switch between home page, clipping page and asset inspecting page.
+1.	Use `React-Redux` to support the access of asset and clip lists.
+2.	Use `React-Router` to support the switch between home page, clipping page and asset inspecting page.
 3.	Use React Hooks to substitute all class components with functional components.
 4.	Enhance the performance of the video editor by:
     - Attaching Throttling to clickable buttons to avoid sending repeated requests within a specified time interval.

@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState } from "react";
+import React, { useRef, useEffect, useState, useLayoutEffect } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import Timeline from './timeline/Timeline';
 import { _throw } from "./Debug";
@@ -14,6 +14,7 @@ const Workplace = () => {
     const oneFrame = 'ONE_FRAME';
 
     const canvasRef = useRef(null);
+    const containerRef = useRef(null);
 
     let index = 0;
     let clipIndex = 0;
@@ -87,6 +88,15 @@ const Workplace = () => {
             current current is ${current}`);
     }
 
+    const resetCanvasSize = () => {
+        const $canvas = canvasRef.current;
+        const $container = containerRef.current;
+        $canvas.height = $container.clientHeight;
+        $canvas.width = $container.clientWidth;
+        const ctx = $canvas.getContext('2d');
+        ctx.fillRect(0, 0, $canvas.width, $canvas.height);
+    }
+
     useEffect(() => {
         index = current;
     }, [current]);
@@ -96,12 +106,11 @@ const Workplace = () => {
     }, [clipList]);
 
     useEffect(() => {
-        const $canvas = canvasRef.current;
-        const ctx = $canvas.getContext('2d');
-        ctx.fillRect(0, 0, $canvas.width, $canvas.height);
-    
+        window.addEventListener("resize", resetCanvasSize);
+        resetCanvasSize();
         return () => {
             setPause();
+            window.removeEventListener("resize", resetCanvasSize);
         }
     }, [])
 
@@ -147,9 +156,9 @@ const Workplace = () => {
         }
     }
 
-    const handleFullScreen = () => {
-        setFullScreen(!fullScreen);
-    }
+    // const handleFullScreen = () => {
+    //     setFullScreen(!fullScreen);
+    // }
 
     const generateTime = (current, fps) => {
         const hh = Math.floor(current / fps / 3600).toString().padStart(2, '0');
@@ -162,13 +171,11 @@ const Workplace = () => {
     return (
         <div className="workplace">
             <div className="workplace__preview">
-                <canvas className={fullScreen ? 'workplace__preview__canvas workplace__preview__canvas--full-screen' :
-                    'workplace__preview__canvas'} ref={canvasRef}>
-                </canvas>
-                <button className={fullScreen ? 'workplace__preview__resize workplace__preview__resize--full-screen' :
-                    'workplace__preview__resize'} onClick={handleFullScreen}>
-                    {fullScreen ? <ImShrink /> : <ImEnlarge />}
-                </button>
+                <h1 className="workplace__preview__title">Preview</h1>
+                <div className="workplace__preview__container" ref={containerRef}><canvas width={4000} height={4000} ref={canvasRef} /></div>
+                <div className="workplace__preview__timestamp">
+                    <p>{generateTime(current, fps)} / {generateTime(nbSamples, fps)}</p>
+                </div>
                 <div className="workplace__preview__toolbar">
                     <button onClick={handleStart}>
                         <ImPlay3 />
@@ -180,9 +187,7 @@ const Workplace = () => {
                         <ImPause2 />
                     </button>
                 </div>
-                <div className="workplace__preview__timestamp">
-                    <p>{generateTime(current, fps)} / {generateTime(nbSamples, fps)}</p>
-                </div>
+               
             </div>
 
             <Timeline current={current} _setCurrentFrame={setCurrentFrame} />

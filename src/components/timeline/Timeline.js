@@ -63,7 +63,7 @@ export default (props) => {
         // const data = ffmpeg.FS('readFile', 'out.mp4');
         // const result = URL.createObjectURL(new Blob([data.buffer], { type: 'video/mp4' }))
         // frameStart, frameEnd, offset
-       
+
         console.log(asset.name);
 
         const posterSrc = await asset.getPosterSrc(0);
@@ -86,7 +86,7 @@ export default (props) => {
             console.log('Invalid action: split');
             return;
         }
-        
+
         const offset_second = props.current;
         const { offset, startOffset, nbSamples, asset } = clipList[clipIndex];
         const nbSample_first = offset_second - offset;
@@ -108,19 +108,19 @@ export default (props) => {
 
     return (
         <div className="timeline" ref={channelRef}>
-            <div className="timeline__zoom">
-                <input className="timeline__zoom__slider"
-                    type="range"
-                    min="1"
-                    max="10"
-                    value={zoom}
-                    onChange={e => setZoom(e.target.value)} />
-            </div>
             <div className="timeline__tools">
-                <button className="timeline__tools_delete" onClick={handleSplit}><ImPageBreak /></button>
+                <button className="timeline__tools__split" onClick={handleSplit}><ImPageBreak /></button>
+                <div className="timeline__tools__zoom">
+                    <input className="timeline__tools__zoom__slider"
+                        type="range"
+                        min="1"
+                        max="10"
+                        value={zoom}
+                        onChange={e => setZoom(e.target.value)} />
+                </div>
             </div>
             <div className="timeline__container" ref={divRef}>
-                <Ruler config={config} current={props.current} _setCurrentFrame={props._setCurrentFrame}  />
+                <Ruler config={config} current={props.current} _setCurrentFrame={props._setCurrentFrame} />
                 <div className="timeline__channls">
                     {
                         [...Array(nChannels)].map((value, index) => (

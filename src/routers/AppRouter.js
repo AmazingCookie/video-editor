@@ -8,9 +8,9 @@ import InspectPage from '../components/InspectPage';
 const Header = () => (
     <header className='header'>
         <h1 className='header__text'>. . .</h1>
-        <NavLink to="/" className={navData => navData.isActive ? "header__link--active" : "header__link"}><AiFillHome />Home</NavLink>
-        <NavLink to="/edit" className={navData => navData.isActive ? "header__link--active" : "header__link"}>Edit</NavLink>
-        <NavLink to="/inspect" className={navData => navData.isActive ? "header__link--active" : "header__link"}>Inspect</NavLink>
+        <NavLink to="/" className={navData => navData.isActive ? "header__link--active" : "header__link"}><AiFillHome />HOME</NavLink>
+        <NavLink to="/edit" className={navData => navData.isActive ? "header__link--active" : "header__link"}>EDIT</NavLink>
+        {/* <NavLink to="/inspect" className={navData => navData.isActive ? "header__link--active" : "header__link"}>Inspect</NavLink> */}
         {/* <p className='header__text'>My github page:</p> */}
     </header>
 );

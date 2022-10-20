@@ -3,7 +3,7 @@ import { useDrag, useDrop } from 'react-dnd';
 import { ItemTypes } from '../Constants';
 import { useDispatch } from 'react-redux';
 import { removeClip, swapClip, changeClipVolume } from '../../slices';
-import { ImCross, ImVolumeMute2, ImVolumeHigh, ImVolumeMedium, ImVolumeLow } from 'react-icons/im'
+import { ImCancelCircle, ImVolumeMute2, ImVolumeHigh, ImVolumeMedium, ImVolumeLow } from 'react-icons/im'
 
 
 export default ({ clip, x, y, h, w }) => {
@@ -70,7 +70,7 @@ export default ({ clip, x, y, h, w }) => {
                 <img height={h}
                     src={clip.posterSrc} />
                 <button onClick={handleDelete}>
-                    <ImCross />
+                    <ImCancelCircle />
                 </button>
                 <div className='timeline__container__channels__channel__clip__tool__volume'>
                     <span>

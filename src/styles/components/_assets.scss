@@ -86,11 +86,22 @@
             border-radius: $s-size;
             background-color: lighten($dark-black, 20);
             margin-left: $xs-size;
-            width: 15rem;
+            width: 40%;
+            margin: 2.5%;
             height: $xxl-font;
             overflow: hidden;
 
+            &__video {
+                position: absolute;
+                bottom: 0;
+                width: 100%;
+                height: 100%;
+                opacity: 0.8;
+
+            }
+
             &__title {
+                z-index: 1000;
                 font-size: $s-font;
                 color: white;
                 text-align: center;
@@ -116,6 +127,7 @@
 
 
             &__add {
+                z-index: 1000;
                 background-color: darken($dark-black, 20);
                 position: absolute;
                 top: 65%;

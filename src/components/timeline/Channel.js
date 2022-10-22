@@ -17,7 +17,7 @@ import ClipCard from "./ClipCard";
 export default (props) => {
     const { scaleRatio, scale, scaleTime, nbSamples } = props.config;
 
-    const defaultHeight = 150;
+    const defaultHeight = 110;
     const defaultWidth = Math.ceil(nbSamples / scaleTime) * scale;
 
     const [height, setHeight] = useState(Math.ceil(defaultHeight * scaleRatio));

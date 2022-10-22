@@ -51,7 +51,6 @@ class Asset {
     }
 
 
-
     // sourceOpen = async(event) => {
     //     const mediaSource = event.target;
 

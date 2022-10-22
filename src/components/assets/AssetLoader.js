@@ -2,8 +2,11 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { createFFmpeg, fetchFile } from '@ffmpeg/ffmpeg';
 import { useDispatch, useSelector } from 'react-redux';
 import { ImBoxAdd } from "react-icons/im";
-
 import { addAsset } from '../../slices';
+
+import demoVideo1 from "../assets/videos/demo_video_1.mp4";
+import demoVideo2 from "../assets/videos/demo_video_2.mp4";
+
 import AssetCard from './AssetCard';
 import AssetInspector from "./AssetInspector";
 import Popup from '../Popup';
@@ -12,6 +15,8 @@ import Popup from '../Popup';
 const ffmpeg = createFFmpeg({ log: true });
 
 const AssetLoader = () => {
+
+
     const [ready, setReady] = useState(false);
 
     const [popupText, setPopupText] = useState('');
@@ -49,6 +54,11 @@ const AssetLoader = () => {
             }
         }
 
+        await addVideo(file);
+
+    }
+
+    const addVideo = async (file) => {
         const src = URL.createObjectURL(file);
 
         const videoUrl = file.name.slice(-3).toLowerCase() === 'mp4' ?
@@ -60,14 +70,26 @@ const AssetLoader = () => {
         }))
     }
 
-
     useEffect(() => {
-        initffmpeg();
+        ready || initffmpeg();
     }, [])
 
+    const addDemoVideo = async () => {
+        dispatch(addAsset({
+            name: 'demo_video_1',
+            src: demoVideo1
+        }))
+        dispatch(addAsset({
+            name: 'demo_video_2',
+            src: demoVideo2
+        }))
+    }
+
     const initffmpeg = () => {
+        console.log('11111111111')
         const load = async () => {
             ffmpeg.isLoaded() || await ffmpeg.load();
+            await addDemoVideo();
             setReady(true);
         }
 
@@ -93,6 +115,7 @@ const AssetLoader = () => {
                     <AssetCard asset={asset} />
                 ))}
             </div>
+
             <AssetInspector />
         </div >
 

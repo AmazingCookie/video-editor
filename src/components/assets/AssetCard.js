@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useDrag } from 'react-dnd';
 import { useDispatch, useSelector } from 'react-redux';
 import throttle from 'lodash.throttle'
@@ -12,6 +12,8 @@ import { ImCancelCircle, ImPlus } from 'react-icons/im'
 export default ({ asset }) => {
     const dispatch = useDispatch();
     const { clipList } = useSelector((state) => state.clip);
+    const [videoSize, setVideoSize] = useState({ height: 0, width: 0 });
+    const videoContainer = useRef(null);
 
     const [{ isDragging }, dragRef] = useDrag(
         () => ({
@@ -53,11 +55,19 @@ export default ({ asset }) => {
 
     const throttlingAdd = useCallback(
         throttle(handleAdd, 1000)
-    , [])
+        , [])
+
+    const videoResize = () => {
+        const $videoContainer = videoContainer.current;
+        setVideoSize({ height: $videoContainer.clientHeight,
+            width: $videoContainer.clientWidth})
+    }
 
     useEffect(() => {
+        videoResize();
         return () => {
             throttlingAdd.cancel();
+            window.removeEventListener('resize', videoResize);
         }
     }, [])
 
@@ -66,9 +76,14 @@ export default ({ asset }) => {
             opacity: isDragging ? 0.5 : 1,
             cursor: 'move'
         }}>
-            <div className="assets__container__card__title" >
+            {/* <div className="assets__container__card__title" >
                 {asset.name.slice(0, 50)}
                 {asset.name.length > 30 && '...'}
+            </div> */}
+            <div className="assets__container__card__video" ref={videoContainer}>
+                <video width={videoSize.width} height={videoSize.height}>
+                    <source src={`${asset.src}#t=0.5`} type="video/mp4" />
+                </video>
             </div>
             <button className="assets__container__card__delete" onClick={handleDelete}>
                 <ImCancelCircle />
